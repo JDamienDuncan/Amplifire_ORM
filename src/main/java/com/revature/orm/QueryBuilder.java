@@ -13,6 +13,8 @@ public class QueryBuilder {
 	private String tableName;
 	Connection connection;
 	
+	// CHANGE ALL 
+	
 	//Constructor
 	public QueryBuilder(Connection connection, String tableName) {
 		this.connection = connection;
@@ -21,27 +23,32 @@ public class QueryBuilder {
 	}
 	
 	// Adds SELECT operation into the statement builder
-	public void getColumns(String columns){
+	public QueryBuilder getColumns(String columns){
 		sql.append("SELECT "+columns);
+		return this;
 	}
 	
 	// Adds FROM operation into the statement builder
-	public void fromTable(String table) {
+	public QueryBuilder fromTable(String table) {
 		sql.append(" FROM "+table);
+		return this;
 	}
 	
-	public void insertTable(String table) {
+	public QueryBuilder insertTable(String table) {
 		sql.append("INSERT "+table);
+		return this;
 		
 	}
 	
 	// Inserts values into cols
-	public void insertRow(String table) { // Evan
+	public QueryBuilder insertRow(String table) { // Evan
 		sql.append("INSERT INTO "+table );
+		return this;
 	}
 	
-	public void updateTable(String table) {
+	public QueryBuilder updateTable(String table) {
 		sql.append("UPDATE "+table);
+		return this;
 	}
 	
 	// Returns a String containing current Query Build
@@ -49,24 +56,29 @@ public class QueryBuilder {
 		return sql.toString();
 	}
 	
-	public void where(String target, String condition) {
+	public QueryBuilder where(String target, String condition) {
 		sql.append("WHERE "+target+" = "+condition);
+		return this;
 	}
 	
-	public void deleteRow(String table) {
+	public QueryBuilder deleteRow(String table) {
 		sql.append("DELETE FROM "+table);
+		return this;
 	}
 	
 	// Sets a col value, overloaded once for integer entries
-	public void setCol(String col, String target) {
+	public QueryBuilder setCol(String col, String target) {
 		sql.append("SET "+col+" = "+target);
+		return this;
 	}
-	public void setCol(String col, int target) {
+	public QueryBuilder setCol(String col, int target) {
 		sql.append("SET "+col+" = "+target);
+		return this;
 	}
 	
 	public void executeOperation(){
 		sql.append(";");
+		
 	}
 	
 	// Executes Query described in the StringBuffer
