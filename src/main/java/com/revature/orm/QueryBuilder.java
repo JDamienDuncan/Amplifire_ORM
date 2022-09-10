@@ -42,12 +42,12 @@ public class QueryBuilder {
 	
 	// Inserts values into cols
 	public QueryBuilder insertRow(String table) { // Evan
-		sql.append("INSERT INTO "+table );
+		sql.append("INSERT INTO "+table+" " );
 		return this;
 	}
 	
 	public QueryBuilder updateTable(String table) {
-		sql.append("UPDATE "+table);
+		sql.append("UPDATE "+table+" ");
 		return this;
 	}
 	
@@ -61,23 +61,29 @@ public class QueryBuilder {
 		return this;
 	}
 	
+	public QueryBuilder where(String target, int condition) {
+		sql.append("WHERE "+target+" = "+condition);
+		return this;
+	}
+	
 	public QueryBuilder deleteRow(String table) {
-		sql.append("DELETE FROM "+table);
+		sql.append("DELETE FROM "+table+" ");
 		return this;
 	}
 	
 	// Sets a col value, overloaded once for integer entries
 	public QueryBuilder setCol(String col, String target) {
-		sql.append("SET "+col+" = "+target);
+		sql.append("SET "+col+" = '"+target+"' ");
 		return this;
 	}
 	public QueryBuilder setCol(String col, int target) {
-		sql.append("SET "+col+" = "+target);
+		sql.append("SET "+col+" = "+target+" ");
 		return this;
 	}
 	
-	public void executeOperation(){
+	public void endOperation(){
 		sql.append(";");
+		//return this;
 		
 	}
 	
@@ -87,7 +93,7 @@ public class QueryBuilder {
 		try(Statement statement = connection.createStatement();){
 			ResultSet set = statement.executeQuery(sql.toString());
 		} catch(SQLException e) {
-			System.out.println("Well that Query didn't work!");
+			System.out.println(e);
 		}
 		
 	}
@@ -95,9 +101,11 @@ public class QueryBuilder {
 	// Executes Update Operation described in the StringBuffer
 	public void executeUpdate(){
 		try(Statement statement = connection.createStatement();){
+			System.out.println("Made it here!");
 			statement.executeUpdate(sql.toString());
+			System.out.println("Made it here 2!");
 		} catch(SQLException e) {
-			System.out.println("Well that Update didn't work!");
+			System.out.println(e);
 		}
 	}
 
